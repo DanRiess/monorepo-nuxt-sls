@@ -127,15 +127,12 @@ To prepare your application for a production deployment, you need to build both 
 
 **Example root `package.json` script:**
 
-```json
-// ./package.json (root)
+```json package.json
 {
-	// ... other configurations ...
 	"scripts": {
 		"build:frontend": "pnpm --filter frontend build",
 		"build:backend": "pnpm --filter backend build",
 		"build": "pnpm run build:frontend && pnpm run build:backend"
-		// ... other scripts like dev, deploy, lint ...
 	}
 }
 ```
