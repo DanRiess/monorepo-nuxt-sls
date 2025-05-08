@@ -1,8 +1,8 @@
 {
-	"name": "pdtech",
+	"name": "myproject",
 	"version": "0.0.1",
 	"private": true,
-	"description": "App for managing coffice and apartments at Lan Vien",
+	"description": "",
 	"type": "module",
 	"scripts": {
 		"dev": "pnpm --filter frontend dev",

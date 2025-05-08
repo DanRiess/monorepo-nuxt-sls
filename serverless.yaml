@@ -1,4 +1,4 @@
-service: pdtech-service
+service: myservice
 
 frameworkVersion: "4"
 

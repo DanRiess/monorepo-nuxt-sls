@@ -26,6 +26,7 @@ This project provides a robust boilerplate for building modern full-stack applic
 
 ## Project Structure Overview
 
+```text
 /myproject
 ├── frontend/ # Nuxt 3 application
 │ ├── .output/ # Nuxt build output for Lambda (server part)
@@ -50,6 +51,7 @@ This project provides a robust boilerplate for building modern full-stack applic
 ├── serverless.yml # Serverless Framework deployment configuration
 └── tsconfig.base.json # Optional: Base TypeScript config extended by frontend/backend
 └── README.md
+```
 
 ## Prerequisites
 
