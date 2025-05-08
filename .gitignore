@@ -1,0 +1,16 @@
+# .gitignore (ROOT level)
+node_modules/
+.DS_Store
+.serverless/
+*.log
+.env
+.env.*
+!.env.example
+
+# Ignore Nuxt build/cache folders within frontend
+frontend/.nuxt/
+frontend/.output/
+
+# Ignore backend build folders if applicable
+backend/dist/
+backend/.build/

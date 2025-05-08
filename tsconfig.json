@@ -1,0 +1,62 @@
+// tsconfig.json (Place this in the root of your monorepo)
+{
+	// === Compiler Options ===
+	"compilerOptions": {
+		/* --- Project Settings --- */
+		"target": "ES2021", // Target modern JavaScript features (align with Node.js LTS versions if needed)
+		"module": "NodeNext", // Use Node.js's modern module system (aligns with "type": "module" in package.json)
+		"moduleResolution": "NodeNext", // How modules are looked up, NodeNext aligns with the 'module' setting
+		// "moduleResolution": "Bundler", // Alternative: Use 'Bundler' if using Vite/Webpack/etc. It's often better for apps. Test compatibility.
+		/* --- Strictness & Code Quality --- */
+		"strict": true, // Enable all strict type-checking options (highly recommended)
+		"skipLibCheck": true, // Skip type checking of declaration files (*.d.ts), speeds up compilation
+		"forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+		"verbatimModuleSyntax": true, // Recommended (TS 5.0+). Enforces consistent 'import type' usage, replaces isolatedModules/preserveValueImports.
+		/* --- Interoperability --- */
+		"esModuleInterop": true, // Enables smoother interaction between CommonJS and ES Modules
+		"resolveJsonModule": true, // Allow importing .json files
+		/* --- Build Orchestration (for Project References) --- */
+		"composite": true, // Enable project compilation features (required for 'references')
+		"declaration": true, // Generate .d.ts files (needed for composite)
+		"declarationMap": true, // Generate sourcemaps for .d.ts files (improves Go To Definition across packages)
+		"sourceMap": true, // Generate .js.map sourcemap files for debugging
+		/* --- Monorepo Path Aliases (Optional but common) --- */
+		// "baseUrl": ".", // Set base directory for path resolution
+		// "paths": {
+		//   "@frontend/*": ["./frontend/src/*"], // Example: Access frontend code via @frontend/
+		//   "@backend/*": ["./backend/src/*"]    // Example: Access backend code via @backend/
+		// Add other aliases as needed
+		// Note: Requires additional setup in Jest/Vite/Webpack/etc. to work at runtime/test time
+		// }
+	},
+	// === Project References ===
+	// Tells TypeScript that this config orchestrates builds for the referenced projects.
+	// `tsc --build` (or `tsc -b`) in the root will build these in the correct order.
+	"references": [
+		{
+			"path": "./frontend"
+		}, // Assumes frontend/tsconfig.json exists
+		{
+			"path": "./backend"
+		} // Assumes backend/tsconfig.json exists
+    // Add references to other TypeScript packages here as needed
+	],
+	// === File Inclusion/Exclusion (Keep Minimal at Root) ===
+	// Generally, the root tsconfig using 'references' should NOT compile files directly.
+	// Let the referenced projects (frontend, backend) define their own 'include'/'exclude'.
+	"include": [], // Keep empty or minimal. Avoid compiling files globally from the root.
+	"exclude": [
+		// Standard exclusions
+		"node_modules",
+		"**/node_modules/**", // Ensure nested node_modules are excluded
+		// Build output directories
+		"**/dist",
+		"**/build",
+		// Nuxt specific build outputs (if applicable globally, otherwise handle in frontend/tsconfig.json)
+		"**/.output",
+		"**/.nuxt",
+		// Other common exclusions
+		"coverage",
+		"logs"
+	]
+}

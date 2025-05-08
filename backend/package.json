@@ -1,0 +1,24 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsup",
+		"package": "pnpm build && powershell -command \"Compress-Archive -Path dist\\* -DestinationPath dist\\package.zip\"",
+		"deploy": "pnpm package && serverless deploy --aws-profile YourProfile",
+		"dev": "cross-env SOURCE_DIRECTORY=src/ serverless dev --aws-profile YourProfile",
+		"dev:debug": "cross-env SOURCE_DIRECTORY=src/ SLS_DEBUG=* serverless dev --aws-profile YourProfile --debug >serverless-debug.log 2>&1",
+		"typecheck": "tsc --noEmit"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.585.0",
+		"@aws-sdk/lib-dynamodb": "^3.585.0"
+	},
+	"devDependencies": {
+		"tsup": "^8.4.0"
+	}
+}

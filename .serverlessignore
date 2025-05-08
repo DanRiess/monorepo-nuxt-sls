@@ -1,0 +1,10 @@
+.git/*
+.serverless/*
+node_modules/*
+src/*
+template/*
+
+tsconfig.json
+tsup.config.ts
+README*
+package*

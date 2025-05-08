@@ -1,0 +1,34 @@
+{
+	"name": "pdtech",
+	"version": "0.0.1",
+	"private": true,
+	"description": "App for managing coffice and apartments at Lan Vien",
+	"type": "module",
+	"scripts": {
+		"dev": "pnpm --filter frontend dev",
+		"build:frontend": "pnpm --filter frontend build",
+		"build:backend": "pnpm --filter backend build",
+		"build": "pnpm run build:frontend && pnpm run build:backend",
+		"deploy:dev": "pnpm build && serverless deploy --stage dev",
+		"deploy:prod": "pnpm build && serverless deploy --stage prod",
+		"sls:offline": "serverless offline --stage dev",
+		"lint": "eslint . --ext .js,.ts,.vue",
+		"lint:fix": "eslint . --ext .js,.ts,.vue --fix",
+		"format": "prettier --write \"**/*.{ts,js,vue,json,md,yaml,html}\"",
+		"format:check": "prettier --check \"**/*.{ts,js,vue,json,md,yaml,html}\""
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.26.0",
+		"@nuxt/eslint-config": "^1.3.0",
+		"@typescript-eslint/eslint-plugin": "^8.31.1",
+		"@typescript-eslint/parser": "^8.31.1",
+		"eslint": "^9.26.0",
+		"eslint-config-prettier": "^10.1.2",
+		"globals": "^16.0.0",
+		"prettier": "^3.5.3",
+		"serverless": "^4.14.2",
+		"serverless-offline": "^14.4.0",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.31.1"
+	}
+}

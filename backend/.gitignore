@@ -1,0 +1,17 @@
+# Distribution
+dist
+out
+build
+node_modules
+
+# Logs
+*.log*
+logs
+
+# Environment
+*.env*
+!*.env.example
+
+# Misc
+.DS_Store
+.serverless

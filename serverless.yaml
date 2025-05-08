@@ -1,0 +1,81 @@
+service: pdtech-service
+
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs20.x # Or your preferred Node.js version compatible with Nuxt 3
+  region: ap-southeast-1 # Or your preferred AWS region
+  stage: ${opt:stage, 'dev'}
+  httpApi:
+    payload: "2.0"
+    disableDefaultEndpoint: false
+    authorizers:
+      customAuthorizer:
+        type: request
+        identitySource: ["$request.header.Authorization"]
+        functionName: authorizer # The name that you use in the function section below.
+        enableSimpleResponses: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchWriteItem
+          Resource:
+            - Fn::GetAtt: [OauthTable, Arn]
+
+        - Effect: Allow
+          Action:
+            - kms:Sign
+            - kms:Verify
+          Resource:
+            - arn:aws:kms:${env:AWS_REGION}:${env:AWS_ACCOUNT_ID}:key/${env:AWS_SIGNATURE_KEY_ID}
+
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          # Resource: "arn:aws:s3:::${param:ninjaProxyBucketName}/*"
+          Resource:
+            - Fn::GetAtt: [NinjaProxyBucket, Arn]
+            - Fn::Sub: "${NinjaProxyBucket.Arn}/*"
+
+        - Effect: Allow
+          Action:
+            - cloudformation:DescribeStacks
+            - cloudformation:ListStackResources
+          Resource: "*"
+
+plugins:
+  - serverless-offline
+  # Add other plugins (e.g., serverless-s3-sync if using SSG)
+
+# Upload your env variables into cloud formation to access in lambdas.
+# Read them in from your .env file, so you don't have to share them.
+environment:
+  # OAUTH_TABLE: ${param:oauthTableName}
+
+package:
+  individually: true
+
+functions:
+  # Define your Nuxt SSR Lambda or backend Lambdas here later
+  # Example for Nuxt SSR Lambda:
+  # nuxtServer:
+  #   handler: frontend/.output/server/index.handler
+  #   events:
+  #     - http: ANY /
+  #     - http: ANY /{proxy+}
+
+resources:
+  # Define DynamoDB, Cognito, etc. here later
+  Resources: {}
+# custom:
+# Custom configurations, e.g., for plugins
